@@ -1,20 +1,24 @@
-let now = new Date();
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-let currentDay = days[now.getDay()];
-let currentHour = now.getHours();
-let currentMinute = now.getMinutes();
-let currentTime = document.querySelector("#current-time");
-currentTime.innerHTML = `${currentDay}, ${currentHour}:${currentMinute}`;
-let apiKey = "0d4847b8ed5adf866001a54ef0a28029";
-let apiPoint = "http://api.openweathermap.org/data/2.5/weather?";
+function formatTime(time) {
+  let hours = time.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = time.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let currentDay = days[time.getDay()];
+  return `${currentDay}, ${hours}:${minutes}`;
+}
 
 function getCurrentWeather(response) {
   //console.log(response);
@@ -63,6 +67,13 @@ function getCurrentLocation(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
+
+let now = new Date();
+let currentTime = document.querySelector("#current-time");
+currentTime.innerHTML = formatTime(now);
+
+let apiKey = "0d4847b8ed5adf866001a54ef0a28029";
+let apiPoint = "http://api.openweathermap.org/data/2.5/weather?";
 
 let searchForm = document.querySelector(".search-form");
 searchForm.addEventListener("submit", handleSunmit);
